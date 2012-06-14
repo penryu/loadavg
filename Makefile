@@ -3,6 +3,8 @@
 # Program Name
 PROJECT = loadavg
 
+BINDIR = $(HOME)/bin
+
 CC = gcc
 CFLAGS = -g -m64 -Wall -Wextra -Wconversion -pedantic
 
@@ -16,6 +18,10 @@ all: $(BIN)
 
 run: $(BIN)
 	./$(BIN)
+
+install: $(BIN)
+	mkdir -p $(BINDIR)
+	install -m755 -s $(BIN) $(BINDIR)
 
 clean:
 	rm -rf $(OBJS) $(BIN) $(BIN).dSYM
