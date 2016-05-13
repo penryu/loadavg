@@ -1,5 +1,5 @@
-#include <cstdio>
-#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #if defined (__SVR4) && defined (__sun)
@@ -13,8 +13,9 @@ void usage() {
 }
 
 int main(int argc, char **argv) {
+  double loads[MAX_SAMPLES];
   int loadCount = 3;
-  int ch, cArg;
+  int ch;
 
   while ((ch = getopt(argc, argv, "c:")) != -1) {
     switch (ch) {
@@ -34,8 +35,6 @@ int main(int argc, char **argv) {
   }
   argc -= optind;
   argv += optind;
-
-  double *loads = new double[loadCount];
 
   if (getloadavg(loads, loadCount) < loadCount) {
     fprintf(stderr, "not enough samples");
