@@ -5,8 +5,11 @@ PROJECT = loadavg
 
 BINDIR = $(HOME)/bin
 
-CC = gcc
-CFLAGS = -g -m64 -Wall -Wextra -Wconversion -pedantic
+# CC = gcc
+CXXFLAGS += -g -O0 -m64 -std=c++11 $(SAFE_CXX)
+SAFE_CXX = -Wall -Wextra -Wconversion -Weffc++ -pedantic \
+	-fno-builtin \
+	-Wno-unused-variable
 
 BIN = $(PROJECT)
 OBJS =
@@ -27,8 +30,8 @@ clean:
 	rm -rf $(OBJS) $(BIN) $(BIN).dSYM
 	rm -rf $(EXPORT_DIR)
 
-$(BIN): $(OBJS) $(BIN).c
-	$(CC) $(CFLAGS) -o $(BIN) $(BIN).c $(OBJS)
+$(BIN): $(OBJS) $(BIN).cc
+	$(CXX) $(CXXFLAGS) -o $(BIN) $(BIN).cc $(OBJS)
 
 %.o: %.c %.h
 	$(C) $(CFLAGS) -c $<
