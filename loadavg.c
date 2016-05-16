@@ -1,50 +1,74 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #if defined (__SVR4) && defined (__sun)
 #include <sys/loadavg.h>
 #endif
 
+#define BUFSIZE 128
 #define MAX_SAMPLES 3
+#define USAGE() { printf(USAGE_FORMAT, argv[0]); exit(1); }
+#define WARN(msg) { fprintf(stderr, "%s: %s\n", argv[0], msg); }
+#define ERROR(msg) { WARN(msg); exit(1); }
 
-void usage() {
-  printf("Usage: loadavg [-c N]\n");
-}
+const char * const USAGE_FORMAT = "usage: %s [-s N]\n"
+  "\t-s N\tCollect N number of samples\n";
+
+int format_nums(double *nums, int c, char * const buf, int s);
 
 int main(int argc, char **argv) {
-  double loads[MAX_SAMPLES];
-  int loadCount = 3;
+  char buffer[BUFSIZE] = {0};
+  double loads[MAX_SAMPLES] = {0.0};
+  int count = MAX_SAMPLES;
   int ch;
 
-  while ((ch = getopt(argc, argv, "c:")) != -1) {
+  while ((ch = getopt(argc, argv, "s:")) != -1) {
     switch (ch) {
-    case 'c':
-      loadCount = atoi(optarg);
-      if (loadCount < 1 || loadCount > MAX_SAMPLES) {
-        usage();
-        fprintf(stderr, "%s: count must be in range 1-%d\n", argv[0], MAX_SAMPLES);
-        exit(1);
+    case 's':
+      count = (int)strtol(optarg, NULL, 0);
+      if (count < 1 || count > MAX_SAMPLES) {
+        USAGE();
+        ERROR("count out of range");
       }
       break;
     case '?':
     default:
-      usage();
+      USAGE();
       break;
     }
   }
   argc -= optind;
   argv += optind;
 
-  if (getloadavg(loads, loadCount) < loadCount) {
-    fprintf(stderr, "not enough samples");
-    exit(1);
+  if (getloadavg(loads, count) < count) {
+    ERROR("failed to collect load samples");
   }
 
-  for (int i = 0; i < loadCount; ++i) {
-    printf("%03.2f ", loads[i]);
+  int written = format_nums(loads, count, buffer, sizeof(buffer));
+  if (written < 0) {
+    ERROR("no format written");
   }
-  printf("\n");
+
+  fputs(buffer, stdout);
 
   return 0;
+}
+
+int
+format_nums(double *nums, int c, char * const buf, int s) {
+  char *cur = buf;
+
+  while (c-- > 0) {
+    int n = snprintf(cur, (size_t)(s - (cur - buf)), "%03.2f ", *nums++);
+    if (n < 0) {
+      return (-1);
+    }
+    cur += n;
+  }
+  *(cur - 1) = '\n';
+
+  return (int)(cur - buf);
 }
