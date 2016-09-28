@@ -1,19 +1,15 @@
 # Macros
-PROJECT = loadavg
-SRC = $(BIN).c
-BIN = $(PROJECT)
-PRODUCTS = $(BIN) $(BIN).dSYM $(BIN).out
-
-CFLAGS += -g -O0 -Wall -Wextra -Wconversion -pedantic -fno-builtin
+BIN = loadavg
+PRODUCTS = $(BIN) $(BIN).dSYM
+PRODUCTS += CMakeCache.txt CMakeFiles cmake_install.cmake build/
+CFLAGS += -g -O0 -Werror -Wall -Wextra -Wconversion -pedantic -fno-builtin
 
 # Targets
 all: $(BIN)
 
-run: $(BIN)
-	./$(BIN) | tee $(BIN).out
+install: $(BIN)
+	install -s $(BIN) /usr/local/bin/$(BIN)
 
 clean:
 	rm -rf $(PRODUCTS)
 
-$(BIN): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(BIN)

@@ -1,23 +1,28 @@
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+/* -*- mode: c -*- */
 
-#if defined (__SVR4) && defined (__sun)
-#include <sys/loadavg.h>
-#endif
+/*
+ * loadavg.c
+ */
+
+#include <inttypes.h>           /* strtoimax */
+#include <stdio.h>              /* fprintf, fputs, snprintf */
+#include <stdlib.h>             /* exit, getloadavg(macOS) */
+#include <unistd.h>             /* getopt */
+
 
 #define BUFSIZE 128
 #define MAX_SAMPLES 3
-#define USAGE() { printf(USAGE_FORMAT, argv[0]); exit(1); }
+#define USAGE() { fprintf(stdout, USAGE_FORMAT, argv[0]); exit(1); }
 #define WARN(msg) { fprintf(stderr, "%s: %s\n", argv[0], msg); }
 #define ERROR(msg) { WARN(msg); exit(1); }
+
 
 const char * const USAGE_FORMAT = "usage: %s [-s N]\n"
   "\t-s N\tCollect N number of samples\n";
 
+
 int format_nums(double *nums, int c, char * const buf, int s);
+
 
 int main(int argc, char **argv) {
   char buffer[BUFSIZE] = {0};
@@ -28,7 +33,7 @@ int main(int argc, char **argv) {
   while ((ch = getopt(argc, argv, "s:")) != -1) {
     switch (ch) {
     case 's':
-      count = (int)strtol(optarg, NULL, 0);
+      count = (int)strtoimax(optarg, NULL, 10);
       if (count < 1 || count > MAX_SAMPLES) {
         USAGE();
         ERROR("count out of range");
@@ -56,6 +61,7 @@ int main(int argc, char **argv) {
 
   return 0;
 }
+
 
 int
 format_nums(double *nums, int c, char * const buf, int s) {
