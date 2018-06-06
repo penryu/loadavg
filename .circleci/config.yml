@@ -21,9 +21,9 @@ jobs:
       - image: penryu/cdev:latest
     steps:
       - checkout
-      - run: mkdir build && cd build
-      - run: CC=clang cmake .. -GNinja
-      - run: ./loadavg
+      - run: mkdir build
+      - run: cd build && CC=clang cmake .. -GNinja
+      - run: build/loadavg
 
   cmake_gcc:
     docker:
@@ -31,8 +31,8 @@ jobs:
     steps:
       - checkout
       - run: mkdir build && cd build
-      - run: CC=gcc cmake .. -GNinja
-      - run: ./loadavg
+      - run: cd build && CC=gcc cmake .. -GNinja
+      - run: build/loadavg
 
 workflows:
   version: 2
