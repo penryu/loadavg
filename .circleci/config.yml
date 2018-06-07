@@ -1,46 +1,42 @@
 version: 2
 jobs:
-  make_clang:
+  clang:
     docker:
       - image: penryu/cdev:latest
+    environment:
+      - CC: clang
     steps:
       - checkout
-      - run: CC=clang make
-      - run: ./loadavg
-
-  make_gcc:
+      - run:
+          name: make
+          command: |
+                    make
+                    ./loadavg
+      - run:
+          name: cmake
+          command: |
+                    mkdir build
+                    cd build
+                    cmake .. -G Ninja
+                    ninja
+                    ./loadavg
+  gcc:
     docker:
       - image: penryu/cdev:latest
+    environment:
+      - CC: gcc
     steps:
       - checkout
-      - run: CC=gcc make
-      - run: ./loadavg
-
-  cmake_clang:
-    docker:
-      - image: penryu/cdev:latest
-    steps:
-      - checkout
-      - run: mkdir build
-      - run: cd build && CC=clang cmake .. -GNinja
-      - run: build/loadavg
-
-  cmake_gcc:
-    docker:
-      - image: penryu/cdev:latest
-    steps:
-      - checkout
-      - run: mkdir build && cd build
-      - run: cd build && CC=gcc cmake .. -GNinja
-      - run: build/loadavg
-
-workflows:
-  version: 2
-  make:
-    jobs:
-      - make_clang
-      - make_gcc
-  cmake:
-    jobs:
-      - cmake_clang
-      - cmake_gcc
+      - run:
+          name: make
+          command: |
+                    make
+                    ./loadavg
+      - run:
+          name: cmake
+          command: |
+                    mkdir build
+                    cd build
+                    cmake .. -G Ninja
+                    ninja
+                    ./loadavg
