@@ -9,9 +9,7 @@ jobs:
       - checkout
       - run:
           name: make
-          command: |
-                    make
-                    ./loadavg
+          command: make && ./loadavg
       - run:
           name: cmake
           command: |
@@ -29,9 +27,7 @@ jobs:
       - checkout
       - run:
           name: make
-          command: |
-                    make
-                    ./loadavg
+          command: make && ./loadavg
       - run:
           name: cmake
           command: |
@@ -42,7 +38,7 @@ jobs:
                     ./loadavg
 workflows:
   version: 2
-  build:
+  build-run:
     jobs:
       - clang
       - gcc
