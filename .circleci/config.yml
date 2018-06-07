@@ -40,3 +40,9 @@ jobs:
                     cmake .. -G Ninja
                     ninja
                     ./loadavg
+workflows:
+  version: 2
+  build:
+    jobs:
+      - clang
+      - gcc
