@@ -2,7 +2,7 @@ version: 2
 jobs:
   clang:
     docker:
-      - image: penryu/cdev:fedora
+      - image: penryu/cdev:alpine
     environment:
       - CC: clang
     steps:
@@ -20,7 +20,7 @@ jobs:
                     ./loadavg
   gcc:
     docker:
-      - image: penryu/cdev:fedora
+      - image: penryu/cdev:alpine
     environment:
       - CC: gcc
     steps:
