@@ -9,7 +9,7 @@
     "prewatch": "npm run lint",
     "watch": "tsc -w",
     "prestart": "npm run lint",
-    "start": "tsnd --respawn --transpileOnly src/index.ts",
+    "start": "tsnd --no-notify --respawn --transpileOnly src/index.ts",
     "prebuild": "npm run lint",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
