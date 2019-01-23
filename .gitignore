@@ -4,3 +4,7 @@ cmake_install.cmake
 loadavg
 *.dSYM
 build/
+node_modules/
+dist/
+/.idea/
+package-lock.json
