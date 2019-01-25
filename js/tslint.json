@@ -4,8 +4,9 @@
     "tslint:recommended"
   ],
   "rules": {
-    "no-console": [ false ],
-    "quotemark": [ false ],
-    "trailing-comma": [ false ]
+    "interface-name": false,
+    "no-console": false,
+    "quotemark": false,
+    "trailing-comma": false,
   }
 }

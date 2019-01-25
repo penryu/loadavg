@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "the-private-item": "webpack-only?",
   "scripts": {
+    "clean": "rm -rf dist/ build/",
+    "distclean": "npm run clean && rm -rf \"node_modules/\"",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "prewatch": "npm run lint",
     "watch": "tsc -w",
