@@ -1,44 +1,86 @@
 version: 2
 jobs:
-  clang:
+
+#  alpine-clang:
+#    docker:
+#      - image: penryu/cbuilder:alpine
+#    environment:
+#      - CC: clang
+#    steps:
+#      - checkout
+#      - run: cc --version
+#      - run: make
+#      - run: ./loadavg
+#
+#  alpine-gcc:
+#    docker:
+#      - image: penryu/cbuilder:alpine
+#    environment:
+#      - CC: gcc
+#    steps:
+#      - checkout
+#      - run: cc --version
+#      - run: make
+#      - run: ./loadavg
+#
+#  centos-clang:
+#    docker:
+#      - image: penryu/cbuilder:centos
+#    environment:
+#      - CC: clang
+#    steps:
+#      - checkout
+#      - run: cc --version
+#      - run: make
+#      - run: ./loadavg
+#
+#  centos-gcc:
+#    docker:
+#      - image: penryu/cbuilder:centos
+#    environment:
+#      - CC: gcc
+#    steps:
+#      - checkout
+#      - run: cc --version
+#      - run: make
+#      - run: ./loadavg
+#
+#  debian-clang:
+#    docker:
+#      - image: penryu/cbuilder:debian
+#    environment:
+#      - CC: clang
+#    steps:
+#      - checkout
+#      - run: cc --version
+#      - run: make
+#      - run: ./loadavg
+
+  debian-gcc:
     docker:
-      - image: penryu/cdev:alpine
-    environment:
-      - CC: clang
+      - image: penryu/cbuilder:debian
+#    environment:
+#      - CC: gcc
     steps:
       - checkout
-      - run:
-          name: make
-          command: make && ./loadavg
-      - run:
-          name: cmake
-          command: |
-                    mkdir build
-                    cd build
-                    cmake .. -G Ninja
-                    ninja
-                    ./loadavg
-  gcc:
-    docker:
-      - image: penryu/cdev:alpine
-    environment:
-      - CC: gcc
-    steps:
-      - checkout
-      - run:
-          name: make
-          command: make && ./loadavg
-      - run:
-          name: cmake
-          command: |
-                    mkdir build
-                    cd build
-                    cmake .. -G Ninja
-                    ninja
-                    ./loadavg
+      - run: cc --version
+      - run: make
+      - run: ./loadavg
+
 workflows:
   version: 2
-  build-run:
+  temp:
     jobs:
-      - clang
-      - gcc
+      - debian-gcc
+#  alpine:
+#    jobs:
+#      - alpine-clang
+#      - alpine-gcc
+#  centos:
+#    jobs:
+#      - centos-clang
+#      - centos-gcc
+#  debian:
+#    jobs:
+#      - debian-clang
+#      - debian-gcc
