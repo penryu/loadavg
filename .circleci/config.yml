@@ -1,86 +1,71 @@
 version: 2
 jobs:
 
-#  alpine-clang:
-#    docker:
-#      - image: penryu/cbuilder:alpine
-#    environment:
-#      - CC: clang
-#    steps:
-#      - checkout
-#      - run: cc --version
-#      - run: make
-#      - run: ./loadavg
-#
-#  alpine-gcc:
-#    docker:
-#      - image: penryu/cbuilder:alpine
-#    environment:
-#      - CC: gcc
-#    steps:
-#      - checkout
-#      - run: cc --version
-#      - run: make
-#      - run: ./loadavg
-#
-#  centos-clang:
-#    docker:
-#      - image: penryu/cbuilder:centos
-#    environment:
-#      - CC: clang
-#    steps:
-#      - checkout
-#      - run: cc --version
-#      - run: make
-#      - run: ./loadavg
-#
-#  centos-gcc:
-#    docker:
-#      - image: penryu/cbuilder:centos
-#    environment:
-#      - CC: gcc
-#    steps:
-#      - checkout
-#      - run: cc --version
-#      - run: make
-#      - run: ./loadavg
-#
-#  debian-clang:
-#    docker:
-#      - image: penryu/cbuilder:debian
-#    environment:
-#      - CC: clang
-#    steps:
-#      - checkout
-#      - run: cc --version
-#      - run: make
-#      - run: ./loadavg
+  alpine-clang:
+    docker:
+      - image: penryu/cbuilder:alpine
+    environment:
+      - CC: clang
+    steps:
+      - checkout
+      - run: make -C c clean test
+
+  alpine-gcc:
+    docker:
+      - image: penryu/cbuilder:alpine
+    environment:
+      - CC: gcc
+    steps:
+      - checkout
+      - run: make -C c clean test
+
+  centos-clang:
+    docker:
+      - image: penryu/cbuilder:centos
+    environment:
+      - CC: clang
+    steps:
+      - checkout
+      - run: make -C c clean test
+
+  centos-gcc:
+    docker:
+      - image: penryu/cbuilder:centos
+    environment:
+      - CC: gcc
+    steps:
+      - checkout
+      - run: make -C c clean test
+
+  debian-clang:
+    docker:
+      - image: penryu/cbuilder:debian
+    environment:
+      - CC: clang
+    steps:
+      - checkout
+      - run: make -C c clean test
 
   debian-gcc:
     docker:
       - image: penryu/cbuilder:debian
-#    environment:
-#      - CC: gcc
+    environment:
+      - CC: gcc
     steps:
       - checkout
-      - run: cc --version
-      - run: make
-      - run: ./loadavg
+      - run: make -C c clean test
 
 workflows:
   version: 2
-  temp:
+  alpine:
     jobs:
+      - alpine-clang
+      - alpine-gcc
+  centos:
+    jobs:
+      - centos-clang
+      - centos-gcc
+  debian:
+    jobs:
+      - debian-clang
       - debian-gcc
-#  alpine:
-#    jobs:
-#      - alpine-clang
-#      - alpine-gcc
-#  centos:
-#    jobs:
-#      - centos-clang
-#      - centos-gcc
-#  debian:
-#    jobs:
-#      - debian-clang
-#      - debian-gcc
