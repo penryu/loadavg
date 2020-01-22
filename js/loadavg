@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const childProcess = require('child_process');
+const fs = require('fs');
+const os = require('os');
+const { promisify } = require('util');
+
+const execFile = promisify(childProcess.execFile);
+const readFile = promisify(fs.readFile);
+
+async function getloadavgForSystem(sysname) {
+    switch (sysname) {
+        case "Darwin":
+        case "FreeBSD":
+            const { stdout } = await execFile("sysctl", ["vm.loadavg"]);
+            return stdout.split(' ').slice(2, 5).join(' ');
+        case "Linux":
+            const output = await readFile("/proc/loadavg", "utf8");
+            return output.split(' ').slice(0, 3).join(' ');
+        default:
+            throw new Error("Unknown system: " + sysname);
+    }
+}
+
+getloadavgForSystem(os.type())
+.then((loadavg) => console.log(loadavg))
+.catch((err) => console.error(err.toString()));
+
