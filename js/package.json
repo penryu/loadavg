@@ -2,7 +2,7 @@
     "name": "loadavg",
     "version": "1.0.0",
     "description": "",
-    "main": "loadavg.js",
+    "main": "loadavg",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -14,6 +14,7 @@
     "license": "ISC",
     "homepage": "https://github.com/saiyix/loadavg#readme",
     "devDependencies": {
+        "@types/node": "^13.5.0",
         "eslint": "^6.8.0"
     }
 }
