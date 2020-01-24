@@ -1,0 +1,19 @@
+{
+    "name": "loadavg",
+    "version": "1.0.0",
+    "description": "",
+    "main": "loadavg.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saiyix/loadavg.git"
+    },
+    "author": "Tim Hammerquist <penryu@gmail.com>",
+    "license": "ISC",
+    "homepage": "https://github.com/saiyix/loadavg#readme",
+    "devDependencies": {
+        "eslint": "^6.8.0"
+    }
+}
