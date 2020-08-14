@@ -1,3 +1,3 @@
-module github.com/saiyix/loadavg
+module github.com/penryu/loadavg
 
 go 1.14
