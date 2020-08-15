@@ -9,9 +9,13 @@ import (
 	"strings"
 )
 
-const maxSamples = 3
+const (
+	maxSamples = 3
+	separator  = " / "
+)
 
 func getLoadAvg() string {
+
 	var ls [maxSamples]C.double
 
 	n := C.getloadavg(&ls[0], maxSamples)
@@ -28,12 +32,8 @@ func main() {
 
 	output.WriteString(getLoadAvg())
 
-	temp, err := getTemp()
-	if err != nil {
-		log.Println(err)
-	}
-	if temp != "" {
-		fmt.Fprintf(&output, " / %s", temp)
+	if tempC, _ := getTemp(); tempC != "" {
+		output.WriteString(separator + tempC)
 	}
 
 	fmt.Println(output.String())
