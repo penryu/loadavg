@@ -6,7 +6,7 @@ jobs:
     steps:
       - run: echo "Triggered by ${{ github.event_name }}"
       - run: echo "Running on ${{ runner.os }}"
-      - run: echo "Branch name: ${{ github.ref }}"
+      - run: echo "Branch name ${{ github.ref }}"
       - name: Check out repo
         uses: actions/checkout@v2
       - run: echo "${{ github.repository }} cloned to runner"
@@ -14,4 +14,4 @@ jobs:
       - name: List files
         run: |
           ls ${{ github.workspace }}
-      - run: echo "Status: ${{ job.status }}"
+      - run: echo "Status ${{ job.status }}"
