@@ -1,8 +1,6 @@
 loadavg
 =======
 
-[![CircleCI](https://circleci.com/gh/penryu/loadavg.png?style=shield)](https://circleci.com/gh/penryu/loadavg)
-
 Truly minimal, vaguely multi-platform loadavg display utility.
 
 Does exactly what it says on the tin; nothing more.
