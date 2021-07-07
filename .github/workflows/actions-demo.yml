@@ -1,0 +1,17 @@
+name: Actions Demo
+on: [push]
+jobs:
+  Checkout-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Triggered by ${{ github.event_name }}"
+      - run: echo "Running on ${{ runner.os }}"
+      - run: echo "Branch name: ${{ github.ref }}"
+      - name: Check out repo
+        uses: actions/checkout@v2
+      - run: echo "${{ github.repository }} cloned to runner"
+      - run: echo "Ready to test."
+      - name: List files
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "Status: ${{ job.status }}"
