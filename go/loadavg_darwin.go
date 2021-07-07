@@ -26,5 +26,6 @@ func getTemp() (string, error) {
 	}
 
 	tempC := strings.ReplaceAll(cmdOut.String(), "\n", " ")
+
 	return strings.TrimSpace(tempC), nil
 }

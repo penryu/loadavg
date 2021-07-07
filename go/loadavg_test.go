@@ -2,6 +2,7 @@ package main
 
 import (
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -22,6 +23,10 @@ func TestGetTemp(t *testing.T) {
 	tempOutput, err := getTemp()
 
 	if err != nil {
+		if strings.Contains(err.Error(), "unsupported") {
+			t.Error(err)
+		}
+
 		t.Skip(err)
 	}
 
