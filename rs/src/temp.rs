@@ -18,7 +18,7 @@ fn read_linux() -> Option<f64> {
             Some((sum + reading, count + 1))
         })?;
 
-    let average = (sum as f64 / count as f64) / 1000.0 ;
+    let average = (sum as f64 / count as f64) / 1000.0;
     Some(average)
 }
 
