@@ -2,7 +2,7 @@ BIN = loadavg
 
 DEPS = src/main.rs
 
-PRODUCTS = ./target/ loadavg
+PRODUCTS = loadavg
 
 all: $(BIN)
 
