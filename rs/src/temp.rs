@@ -30,10 +30,9 @@ fn read_macos() -> Option<f64> {
 }
 
 pub fn read() -> Option<f64> {
-    let temp = match OS {
+    match OS {
         "linux" => read_linux(),
         "macos" => read_macos(),
         _ => None
-    };
-    temp.to_owned()
+    }
 }
