@@ -25,7 +25,7 @@ fn read_linux() -> Option<String> {
 }
 
 fn read_macos() -> Option<String> {
-    let output = Command::new(MACOS_TEMP_BIN).output().unwrap().stdout;
+    let output = Command::new(MACOS_TEMP_BIN).output().ok()?.stdout;
     let reading = String::from_utf8(output).unwrap().trim().to_owned();
     Some(reading)
 }
