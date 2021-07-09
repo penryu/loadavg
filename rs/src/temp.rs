@@ -18,8 +18,10 @@ fn read_linux() -> Option<f64> {
             Some((sum + reading, count + 1))
         })?;
 
-    let average = (sum as f64 / count as f64) / 1000.0;
-    Some(average)
+    match count {
+        0 => None,
+        _ => Some((sum as f64 / count as f64) / 1000.0),
+    }
 }
 
 fn read_macos() -> Option<f64> {
