@@ -2,16 +2,17 @@ BIN = loadavg
 
 DEPS = src/main.rs
 
-PRODUCTS = ./target/
+PRODUCTS = ./target/ loadavg
 
 all: $(BIN)
-	cp target/release/loadavg .
 
-test: $(DEPS)
-	cargo test
+run: $(BIN)
+	./$(BIN)
 
 clean:
 	cargo clean
+	rm -rf $(PRODUCTS)
 
 $(BIN): $(DEPS)
 	cargo build --release
+	cp target/release/loadavg .
