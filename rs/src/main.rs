@@ -2,11 +2,10 @@ mod loadavg;
 mod temp;
 
 fn main() {
-    let mut output = loadavg::read();
+    let loadavg = loadavg::read();
 
-    if let Some(temp) = temp::read() {
-        output += &format!(" / {}", temp);
-    }
-
-    println!("{}", output);
+    match temp::read() {
+        Some(temp) => println!("{} / {:.1}°C", loadavg, temp),
+        None => println!("{}", loadavg),
+    };
 }
