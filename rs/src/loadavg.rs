@@ -4,23 +4,35 @@ extern "C" {
     fn getloadavg(loadavg: *mut f64, count: i32) -> i32;
 }
 
-pub struct LoadAvg(f64, f64, f64);
+pub struct LoadAvg {
+    one: f64,
+    five: f64,
+    fifteen: f64,
+}
+
+impl Default for LoadAvg {
+    fn default() -> Self {
+        LoadAvg {
+            one: 0.0,
+            five: 0.0,
+            fifteen: 0.0,
+        }
+    }
+}
 
 impl fmt::Display for LoadAvg {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:0.2} {:0.2} {:0.2}", self.0, self.1, self.2)
+        let LoadAvg { one, five, fifteen } = self;
+        write!(f, "{:0.2} {:0.2} {:0.2}", one, five, fifteen)
     }
 }
 
 pub fn read() -> LoadAvg {
-    let mut loadavg = [0f64; 3];
-    let count: i32;
+    let mut load = LoadAvg::default();
 
     unsafe {
-        count = getloadavg(&mut loadavg as *mut f64, 3);
+        let _ = getloadavg(&mut load.one as *mut f64, 3);
     }
 
-    assert_eq!(count, 3);
-
-    LoadAvg(loadavg[0], loadavg[1], loadavg[2])
+    load
 }
