@@ -41,7 +41,6 @@ mod temperature {
             .flat_map(|s| s.trim().parse::<f64>())
             .collect::<Vec<_>>();
 
-        #[allow(clippy::cast_precision_loss)]
         let count: f64 = readings.len() as f64;
         let sum: f64 = readings.into_iter().sum();
         let avg = sum / count;
