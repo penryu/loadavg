@@ -8,10 +8,10 @@ use common::LoadAvg;
 cfg_if! {
     if #[cfg(target_os = "linux")] {
         mod linux;
-        use linux::{temperature};
+        use linux::temperature;
     } else if #[cfg(target_os = "macos")] {
         mod macos;
-        use macos::{temperature};
+        use macos::temperature;
     }
 }
 
