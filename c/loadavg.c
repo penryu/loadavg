@@ -1,7 +1,3 @@
-/* -*- mode: c -*- */
-
-/* loadavg.c */
-
 #include <stdio.h>              /* fprintf */
 #include <stdlib.h>             /* getloadavg(FreeBSD, Linux, macOS) */
 
@@ -15,5 +11,4 @@ static double Samples[3];
 int main(void) {
   getloadavg(Samples, 3);
   printf("%03.2f %03.2f %03.2f\n", Samples[0], Samples[1], Samples[2]);
-  return 0;
 }
