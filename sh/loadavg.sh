@@ -1,8 +1,8 @@
-# /bin/sh
+#!/bin/sh
 
-sysname=`uname -s`
+sysname=$(uname -s)
 
-case "$sysname" in
+case $sysname in
   *BSD | Darwin )
     sysctl vm.loadavg | cut -d' ' -f3,4,5
     ;;
@@ -10,5 +10,5 @@ case "$sysname" in
     cut -d' ' -f1,2,3 < /proc/loadavg
     ;;
   *)
-    echo "Unknown system:" $sysname
+    echo "Unknown system:" "$sysname"
 esac
