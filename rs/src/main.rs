@@ -1,29 +1,32 @@
 #![warn(clippy::pedantic)]
+#![deny(clippy::all)]
 
-use cfg_if::cfg_if;
+use std::fmt;
 
-mod common;
-use common::LoadAvg;
+use libc::getloadavg;
 
-cfg_if! {
-    if #[cfg(target_os = "linux")] {
-        mod linux;
-        use linux as curr_os;
-    } else if #[cfg(target_os = "macos")] {
-        mod macos;
-        use macos as curr_os;
-    } else {
-        mod unsupported;
-        use unsupported as curr_os;
+/// Holds load readings.
+#[derive(Debug, Default)]
+pub struct LoadAvg(f64, f64, f64);
+
+impl LoadAvg {
+    #[must_use]
+    pub fn new() -> Self {
+        let mut loadavg = LoadAvg::default();
+        let _ = unsafe { getloadavg(std::ptr::addr_of_mut!(loadavg.0), 3) };
+        loadavg
+    }
+}
+
+impl fmt::Display for LoadAvg {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let LoadAvg(x, y, z) = self;
+        write!(f, "{x:0.2} {y:0.2} {z:0.2}")
     }
 }
 
 fn main() {
-    let mut output = LoadAvg::new().to_string();
-
-    if let Ok(temp) = curr_os::temperature() {
-        output.push_str(&format!(" / {temp:.1}°C"));
-    }
+    let output = LoadAvg::new();
 
     println!("{output}");
 }
